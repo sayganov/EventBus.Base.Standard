@@ -1,0 +1,36 @@
+name: Build
+
+on:
+  push:
+    paths:
+      - src/**
+      - .github/workflows/**
+
+jobs:
+  job-ubuntu:
+    name: job-ubuntu
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - run: |
+          git fetch --prune --unshallow
+
+      - name: Setup GitVersion
+        id: gitversion
+        uses: roryprimrose/rungitversion@v1.0.0
+
+      - name: Setup .NET Core
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: 3.1.100
+
+      - name: Restore
+        run: dotnet restore $GITHUB_WORKSPACE/src
+
+      - name: Pack
+        run: dotnet pack $GITHUB_WORKSPACE/src/EventBus.Base.Standard/EventBus.Base.Standard.csproj -c Release -p:PackageVersion=${{ steps.gitversion.outputs.SemVer }}
+
+      - name: Push EventBus.Base.Standard.${{ steps.gitversion.outputs.SemVer }}
+        run: dotnet nuget push $GITHUB_WORKSPACE/src/EventBus.Base.Standard/bin/Release/EventBus.Base.Standard.${{ steps.gitversion.outputs.SemVer }}.nupkg -k ${{ secrets.NUGET_API_KEY }} -s https://api.nuget.org/v3/index.json

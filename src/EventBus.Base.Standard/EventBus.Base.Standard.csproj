@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>netstandard2.0;netstandard2.1</TargetFrameworks>
+    <Version>1.0.0</Version>
+    <PackageId>EventBus.Base.Standard</PackageId>
+    <Authors>Georgy Sayganov</Authors>
+    <RepositoryType>git</RepositoryType>
+    <RepositoryUrl>https://github.com/sayganov/EventBus.Base.Standard</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/sayganov/EventBus.Base.Standard</PackageProjectUrl>
+    <Description>A base library for EventBus.RabbitMQ.Standard and EventBus.AzureServiceBus.Standard</Description>
+    <PackageTags>dotnet netstandard csharp eventbus</PackageTags>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
+  </ItemGroup>
+
+</Project>
